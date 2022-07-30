@@ -35,4 +35,5 @@ jobs:
         run: mvn test -Dtest=RunTests -Dbrowser=chrome-ci -Denv=dev
 
       - name: Gerar relatório
+        if: always()
         run: mvn cluecumber-report:reporting

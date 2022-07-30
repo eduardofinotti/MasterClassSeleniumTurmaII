@@ -23,6 +23,6 @@
 
       Exemplos:
       | email             | senha      | mensagem         |
-      | xxxxxx            | 1234567    | E-mail inválido.x|
+      | xxxxxx            | 1234567    | E-mail inválido. |
       | finotti@gmail.com | .....      | Senha inválida.  |
 
