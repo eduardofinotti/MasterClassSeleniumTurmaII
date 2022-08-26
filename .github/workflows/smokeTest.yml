@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  RunTest:
+  Install:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,12 +36,15 @@ jobs:
         env:
           SLACK_CHANEEL: resultado-execução-testes
           SLACK_COLOR: #878787
-          SLACK_ICON: https://cdn-icons-png.flaticon.com/512/148/148767.png?size=48
-          SLACK_MESSAGE: 'Testes do PR inciados. :white_check_mark:'
-          SLACK_TITLE: 'Testes do PR inciados. :white_check_mark:'
+          SLACK_MESSAGE: 'Testes do PR inciados.'
+          SLACK_TITLE: 'Testes do PR inciados.'
           SLACK_USERNAME: Start
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
+  RunTest:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Run Tests
         run: mvn test -Dtest=RunTests -Dbrowser=chrome-ci -Denv=dev
 
