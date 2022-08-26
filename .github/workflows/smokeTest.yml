@@ -32,16 +32,6 @@ jobs:
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
-      - name: Notificação Slack
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANEEL: resultado-execução-testes
-          SLACK_COLOR: #878787
-          SLACK_MESSAGE: 'Testes do PR inciados.'
-          SLACK_TITLE: 'Testes do PR inciados.'
-          SLACK_USERNAME: Start
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
   job2:
     name: Job 2
     needs: job1
