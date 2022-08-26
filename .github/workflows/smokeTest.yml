@@ -48,6 +48,7 @@ jobs:
 
   job2:
     name: Job 2
+    if: always()
     needs: job1
     runs-on: ubuntu-latest
 
