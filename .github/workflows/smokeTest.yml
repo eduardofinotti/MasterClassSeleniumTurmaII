@@ -31,6 +31,16 @@ jobs:
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
+      - name: Notificação Slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANEEL: resultado-execução-testes
+          SLACK_COLOR: #878787
+          SLACK_MESSAGE: 'Testes do PR inciados.'
+          SLACK_TITLE: 'Testes do PR inciados.'
+          SLACK_USERNAME: Start
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
       - name: Run Tests
         run: mvn test -Dtest=RunTests -Dbrowser=chrome-ci -Denv=dev
 
@@ -44,3 +54,27 @@ jobs:
         with:
           name: report-execution
           path: '**/formated-report/'
+
+      - name: Notificação Slack - Sucesso
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANEEL: resultado-execução-testes
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://cdn-icons-png.flaticon.com/512/148/148767.png?size=48
+          SLACK_MESSAGE: 'Sucesso na execução de testes do PR :white_check_mark:'
+          SLACK_TITLE: 'Sucesso na execução de testes do PR :white_check_mark:'
+          SLACK_USERNAME: SECESSO
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Notificação Slack - Falha
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANEEL: resultado-execução-testes
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://cdn.icon-icons.com/icons2/1378/PNG/512/dialogerror_92823.png?size=48
+          SLACK_MESSAGE: 'Erro na execução de testes do PR :fire:'
+          SLACK_TITLE: 'Erro na execução de testes do PR :fire:'
+          SLACK_USERNAME: ERRO
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
